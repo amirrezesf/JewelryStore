@@ -98,13 +98,15 @@ export const Header: React.FC<HeaderProps> = ({
   userPhone,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchModalOpen, setMobileSearchModalOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<'products' | 'market' | 'services' | null>(null);
   const [mobileAccordion, setMobileAccordion] = useState<'products' | 'market' | 'services' | null>('products');
 
-  // Animated Search State
+  // Animated Search State (Desktop)
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const mobileModalSearchInputRef = useRef<HTMLInputElement | null>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -113,9 +115,9 @@ export const Header: React.FC<HeaderProps> = ({
   const activeRates = goldRates || rates || INITIAL_GOLD_RATES;
   const activePage = currentPage || currentView || 'home';
 
-  // Prevent background scroll when mobile menu is open
+  // Prevent background scroll when mobile menu or search modal is open
   useEffect(() => {
-    if (mobileMenuOpen) {
+    if (mobileMenuOpen || mobileSearchModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -123,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, mobileSearchModalOpen]);
 
   // Focus input automatically when search is triggered
   useEffect(() => {
@@ -135,20 +137,35 @@ export const Header: React.FC<HeaderProps> = ({
     }
   }, [isSearchActive]);
 
+  // Focus input automatically when mobile search modal opens
+  useEffect(() => {
+    if (mobileSearchModalOpen) {
+      const timer = setTimeout(() => {
+        mobileModalSearchInputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [mobileSearchModalOpen]);
+
   // Keyboard shortcut listener (Cmd+K / Ctrl+K opens search, Esc closes)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setIsSearchActive((prev) => !prev);
-        setOpenDropdown(null);
-      } else if (e.key === 'Escape' && isSearchActive) {
-        setIsSearchActive(false);
+        if (window.innerWidth < 1024) {
+          setMobileSearchModalOpen((prev) => !prev);
+        } else {
+          setIsSearchActive((prev) => !prev);
+          setOpenDropdown(null);
+        }
+      } else if (e.key === 'Escape') {
+        if (isSearchActive) setIsSearchActive(false);
+        if (mobileSearchModalOpen) setMobileSearchModalOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isSearchActive]);
+  }, [isSearchActive, mobileSearchModalOpen]);
 
   // Hover delay handling to make dropdown usage smooth
   const handleMouseEnterDropdown = (menu: 'products' | 'market' | 'services') => {
@@ -255,6 +272,7 @@ export const Header: React.FC<HeaderProps> = ({
         handleNavigate('shop');
       }
       setIsSearchActive(false);
+      setMobileSearchModalOpen(false);
     }
   };
 
@@ -266,6 +284,7 @@ export const Header: React.FC<HeaderProps> = ({
       handleNavigate('shop');
     }
     setIsSearchActive(false);
+    setMobileSearchModalOpen(false);
   };
 
   const toggleSearchMode = () => {
@@ -280,24 +299,24 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-[100] w-full backdrop-blur-md bg-white/95 border-b border-[#E8E4DA] transition-all shadow-xs">
       {/* Top Luxury Announcement Bar */}
-      <div className="bg-[#F7F5EE] border-b border-[#E8E4DA] text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-[#57534E]">
+      <div className="bg-[#F7F5EE] border-b border-[#E8E4DA] text-xs py-2 px-3 sm:px-4 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[#57534E]">
           {/* Live Gold Price Quick Ticker */}
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1.5 text-[#925B03]">
-              <span className="relative flex h-2 w-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="flex items-center gap-1.5 text-[#925B03] min-w-0">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B8860B] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B8860B]"></span>
               </span>
-              <span className="font-medium text-[#1C1917]">مظنه زنده طلای ۱۸ عیار:</span>
-              <span className="font-semibold tracking-wide text-[#A16207]">
+              <span className="font-medium text-[#1C1917] hidden xs:inline shrink-0">مظنه طلای ۱۸:</span>
+              <span className="font-semibold tracking-wide text-[#A16207] text-xs truncate">
                 {formatPrice(activeRates.rate18K)} / گرم
               </span>
             </span>
 
             <button
               onClick={() => handleOpenInfo('pricing')}
-              className="hidden sm:inline-flex items-center gap-1 text-[11px] text-[#78716C] hover:text-[#A16207] transition-colors underline decoration-[#D4AF37]/40 cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1 text-[11px] text-[#78716C] hover:text-[#A16207] transition-colors underline decoration-[#D4AF37]/40 cursor-pointer shrink-0"
               title="مشاهده فرمول شفاف قیمت‌گذاری اتحادیه"
             >
               <Sparkles className="w-3 h-3 text-[#B8860B]" />
@@ -305,8 +324,8 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Quick VIP Contact & Order Tracking */}
-          <div className="flex items-center gap-4 text-[11px]">
+          {/* Quick VIP Contact & Order Tracking (Desktop only - in mobile moved cleanly into sidebar) */}
+          <div className="hidden lg:flex items-center gap-4 text-[11px] shrink-0">
             <button
               onClick={handleOpenTracking}
               className="hover:text-[#A16207] transition-colors flex items-center gap-1 cursor-pointer"
@@ -336,39 +355,39 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Main Navigation Bar */}
       <div 
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-3 relative" 
+        className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4 relative" 
         ref={dropdownRef}
       >
-        {/* Mobile menu trigger */}
-        <div className="flex items-center gap-2 lg:hidden shrink-0">
+        {/* Mobile menu trigger & single search button */}
+        <div className="flex items-center gap-1 lg:hidden shrink-0">
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#1C1917] hover:text-[#B8860B] transition-colors focus:outline-none cursor-pointer"
+            onClick={() => setMobileMenuOpen(true)}
+            className="p-2 text-[#1C1917] hover:text-[#B8860B] transition-colors focus:outline-none cursor-pointer rounded-lg hover:bg-[#FAF8F5]"
             aria-label="منوی سایت"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 text-[#1C1917]" />}
+            <Menu className="w-6 h-6 text-[#1C1917]" />
           </button>
           <button
-            onClick={toggleSearchMode}
-            className="p-2 text-[#1C1917] hover:text-[#B8860B] transition-colors cursor-pointer"
-            aria-label="جستجو"
+            onClick={() => setMobileSearchModalOpen(true)}
+            className="p-2 text-[#1C1917] hover:text-[#B8860B] transition-colors cursor-pointer rounded-lg hover:bg-[#FAF8F5]"
+            aria-label="جستجو در محصولات"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-5 h-5 text-[#B8860B]" />
           </button>
         </div>
 
-        {/* Brand Logo & Wordmark (Refined Smaller Luxury Scale) */}
+        {/* Brand Logo & Wordmark (Refined Luxury Scale) */}
         <div 
           onClick={() => { handleNavigate('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="cursor-pointer flex flex-col items-center select-none group shrink-0"
         >
           <div className="flex items-center gap-1.5">
-            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#1C1917] font-serif-luxury group-hover:text-[#B8860B] transition-colors">
+            <span className="text-base sm:text-xl font-bold tracking-tight text-[#1C1917] font-serif-luxury group-hover:text-[#B8860B] transition-colors">
               گـالری زریـن
             </span>
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#B8860B] mb-0.5"></span>
           </div>
-          <span className="text-[8px] sm:text-[9px] tracking-[0.2em] text-[#8C6514] font-medium uppercase mt-0.5">
+          <span className="text-[7.5px] sm:text-[9px] tracking-[0.2em] text-[#8C6514] font-medium uppercase mt-0.5">
             Zarrin Haute Joaillerie
           </span>
         </div>
@@ -759,13 +778,13 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
         )}
 
-        {/* Actions (Auth, Animated Search Trigger Button, Wishlist, Cart) */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-          {/* Animated Search Button Trigger (When search is inactive) */}
+        {/* Actions (Desktop: Search, Auth, Wishlist, Cart | Mobile: Wishlist, Cart) */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          {/* Desktop Animated Search Button Trigger (Hidden on mobile) */}
           {!isSearchActive && (
             <button
               onClick={toggleSearchMode}
-              className="relative flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full border border-[#D4AF37]/45 bg-[#FAF8F5] text-xs text-[#78716C] hover:text-[#1C1917] hover:border-[#B8860B] hover:shadow-xs transition-all duration-300 cursor-pointer group shadow-2xs"
+              className="hidden lg:flex relative items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full border border-[#D4AF37]/45 bg-[#FAF8F5] text-xs text-[#78716C] hover:text-[#1C1917] hover:border-[#B8860B] hover:shadow-xs transition-all duration-300 cursor-pointer group shadow-2xs"
               title="جستجو در آثار طلا و جواهر (⌘K)"
               aria-label="جستجوی محصول"
             >
@@ -775,12 +794,12 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
 
-          {/* User Auth / Profile */}
+          {/* Desktop User Auth / Profile (Hidden on mobile, moved into sidebar) */}
           {onOpenAuth && (
             isLoggedIn ? (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-[#FAF8F5] border border-[#D4AF37]/60 text-[#1C1917] hover:border-[#B8860B] transition-all text-xs font-bold shadow-2xs cursor-pointer"
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-[#FAF8F5] border border-[#D4AF37]/60 text-[#1C1917] hover:border-[#B8860B] transition-all text-xs font-bold shadow-2xs cursor-pointer"
                 title="مشاهده حساب کاربری و کیف پول"
               >
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
@@ -790,7 +809,7 @@ export const Header: React.FC<HeaderProps> = ({
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#1C1917] text-white hover:bg-[#B8860B] transition-all text-xs font-bold shadow-xs cursor-pointer"
+                className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#1C1917] text-white hover:bg-[#B8860B] transition-all text-xs font-bold shadow-xs cursor-pointer"
               >
                 <User className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span>ورود / ثبت‌نام</span>
@@ -817,7 +836,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="header-cart-button"
             onClick={onOpenCart}
-            className="relative flex items-center gap-2 py-1.5 px-3 sm:py-2 sm:px-3.5 rounded-full border border-[#D4AF37]/40 bg-[#FAF8F5] text-[#1C1917] hover:border-[#B8860B] hover:bg-[#F2EFE9] transition-all group cursor-pointer shadow-2xs"
+            className="relative flex items-center gap-1.5 sm:gap-2 py-1.5 px-2.5 sm:py-2 sm:px-3.5 rounded-full border border-[#D4AF37]/40 bg-[#FAF8F5] text-[#1C1917] hover:border-[#B8860B] hover:bg-[#F2EFE9] transition-all group cursor-pointer shadow-2xs"
             title="سبد خرید"
             aria-label="سبد خرید"
           >
@@ -866,41 +885,34 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Categorized Nav Accordions for Mobile */}
             <div className="p-4 space-y-3 flex-1">
-              {/* Search Input in Mobile Drawer */}
-              <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full mb-1">
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B8860B]" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="جستجو در نام طلا، سکه یا کد اثر..."
-                  className="w-full pr-9 pl-14 py-2 rounded-xl border border-[#E8E4DA] bg-[#FAF8F5] text-xs text-[#1C1917] focus:outline-none focus:border-[#B8860B]"
-                />
-                <button
-                  type="submit"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="absolute left-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-[#1C1917] text-white text-[10px] font-semibold rounded-lg"
-                >
-                  یافتن
-                </button>
-              </form>
-
-              {/* User Account Button at Top */}
+              {/* User Account Button at Top of Drawer */}
               {onOpenAuth && (
                 <button
                   onClick={() => { onOpenAuth(); setMobileMenuOpen(false); }}
-                  className="w-full text-right py-2.5 px-3.5 rounded-xl bg-[#1C1917] text-[#D4AF37] font-bold flex items-center justify-between cursor-pointer shadow-xs mb-1"
+                  className="w-full text-right py-3 px-3.5 rounded-xl bg-[#1C1917] text-[#D4AF37] font-bold flex items-center justify-between cursor-pointer shadow-xs mb-2 hover:bg-black transition-colors"
                 >
-                  <span className="flex items-center gap-2 min-w-0 truncate">
-                    {isLoggedIn && <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse shrink-0"></span>}
-                    <User className="w-4 h-4 shrink-0" />
+                  <span className="flex items-center gap-2.5 min-w-0 truncate">
+                    {isLoggedIn && <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0"></span>}
+                    <User className="w-4 h-4 shrink-0 text-[#D4AF37]" />
                     <span className="text-xs truncate">
                       {isLoggedIn ? (userPhone ? `حساب من (${userPhone})` : 'حساب کاربری و کیف پول') : 'ورود / ثبت‌نام در زرین'}
                     </span>
                   </span>
-                  <ArrowLeft className="w-3.5 h-3.5 shrink-0 mr-1" />
+                  <ArrowLeft className="w-3.5 h-3.5 shrink-0 mr-1 text-[#D4AF37]" />
                 </button>
               )}
+
+              {/* Order Tracking Quick Action in Sidebar */}
+              <button
+                onClick={() => { setMobileMenuOpen(false); handleOpenTracking(); }}
+                className="w-full text-right py-2 px-3 rounded-xl border border-[#E8E4DA] bg-[#FAF8F5] text-xs font-semibold text-[#1C1917] flex items-center justify-between cursor-pointer hover:bg-white transition-all mb-2"
+              >
+                <span className="flex items-center gap-2 truncate">
+                  <FileText className="w-3.5 h-3.5 text-[#B8860B] shrink-0" />
+                  <span className="truncate">پیگیری لحظه‌ای سفارشات</span>
+                </span>
+                <ArrowLeft className="w-3 h-3 text-[#B8860B] shrink-0" />
+              </button>
 
               {/* Accordion 1: دسته‌بندی‌های محصولات */}
               <div className="border border-[#E8E4DA] rounded-xl overflow-hidden bg-[#FAF8F5]">
@@ -1045,6 +1057,16 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Mobile Drawer Bottom Actions */}
             <div className="p-4 border-t border-[#E8E4DA] bg-[#FAF8F5] space-y-2.5 shrink-0">
+              {/* VIP Phone Consultation */}
+              <a
+                href="tel:02122558890"
+                className="w-full py-2.5 rounded-xl bg-white border border-[#E8E4DA] text-[#1C1917] font-medium text-xs flex items-center justify-center gap-2 hover:bg-[#EAE6DF] transition-all cursor-pointer truncate"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#B8860B] shrink-0" />
+                <span className="truncate">مشاوره VIP بوتیک: ۰۲۱-۲۲۵۵۸۸۹۰</span>
+              </a>
+
+              {/* Gold Admin Panel (if logged in) */}
               {isLoggedIn && onOpenAdmin && (
                 <button
                   onClick={() => { onOpenAdmin(); setMobileMenuOpen(false); }}
@@ -1054,13 +1076,105 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="truncate">ورود به پنل مدیریت طلا</span>
                 </button>
               )}
-              <a
-                href="tel:02122558890"
-                className="w-full py-2.5 rounded-xl bg-white border border-[#E8E4DA] text-[#1C1917] font-medium text-xs flex items-center justify-center gap-2 hover:bg-[#EAE6DF] transition-all cursor-pointer truncate"
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Mobile Dedicated Search Modal (Full screen modal for instant, clean mobile search) */}
+      {mobileSearchModalOpen && typeof document !== 'undefined' && createPortal(
+        <div className="lg:hidden fixed inset-0 z-[100000] flex flex-col justify-start bg-black/60 backdrop-blur-md animate-fade-in p-4 sm:p-6">
+          <div 
+            className="w-full max-w-lg mx-auto bg-white rounded-3xl shadow-2xl border border-[#E8E4DA] overflow-hidden flex flex-col animate-slide-in-top"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 bg-[#F7F5EE] border-b border-[#E8E4DA] flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Search className="w-4 h-4 text-[#B8860B]" />
+                <span className="text-xs font-bold text-[#1C1917]">جستجوی هوشمند در گالری زرین</span>
+              </div>
+              <button
+                onClick={() => setMobileSearchModalOpen(false)}
+                className="p-1 rounded-full text-[#78716C] hover:text-[#1C1917] hover:bg-[#EAE6DF] transition-colors cursor-pointer"
+                aria-label="بستن پنجره جستجو"
               >
-                <Phone className="w-3.5 h-3.5 text-[#B8860B] shrink-0" />
-                <span className="truncate">تماس با بوتیک: ۰۲۱-۲۲۵۵۸۸۹۰</span>
-              </a>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Search Form */}
+            <div className="p-4">
+              <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
+                <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B8860B] pointer-events-none" />
+                <input
+                  ref={mobileModalSearchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="نام طلا، شمش ۲۴ عیار، النگو، انگشتر..."
+                  className="w-full pr-10 pl-20 py-3 rounded-2xl border-2 border-[#D4AF37] bg-[#FAF8F5] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#D4AF37]/20 shadow-inner transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute left-16 top-1/2 -translate-y-1/2 p-1 text-[#A8A29E] hover:text-[#1C1917] cursor-pointer"
+                    aria-label="پاک کردن"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  className="absolute left-1.5 top-1/2 -translate-y-1/2 px-3.5 py-2 bg-[#1C1917] hover:bg-[#B8860B] text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-xs"
+                >
+                  یافتن
+                </button>
+              </form>
+
+              {/* Popular Search Suggestions in Modal */}
+              <div className="mt-4">
+                <span className="text-[11px] font-bold text-[#925B03] flex items-center gap-1.5 mb-2.5">
+                  <Sparkles className="w-3 h-3 text-[#B8860B]" />
+                  پیشنهادات پرطرفدار خریداران طلا:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {['طلای آبشده', 'شمش ۲۴ عیار', 'النگو', 'دستبند کارتیه', 'انگشتر سولیتر', 'سرویس عروس', 'پلاک کادویی'].map((term) => (
+                    <button
+                      key={term}
+                      type="button"
+                      onClick={() => handleQuickSearchKeyword(term)}
+                      className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F2ECE1] border border-[#E8E4DA] text-[11px] text-[#44403C] hover:text-[#925B03] font-medium transition-colors cursor-pointer"
+                    >
+                      {term}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Quick Links */}
+            <div className="p-3 bg-[#FAF8F5] border-t border-[#E8E4DA] flex items-center justify-between text-[11px] text-[#78716C]">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileSearchModalOpen(false);
+                  handleNavigate('shop');
+                }}
+                className="text-[#925B03] hover:text-[#78350F] font-bold flex items-center gap-1 cursor-pointer"
+              >
+                <span>مشاهده کلیه محصولات طلا و جواهر</span>
+                <ArrowLeft className="w-3 h-3" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setMobileSearchModalOpen(false)}
+                className="text-[#A8A29E] hover:text-[#1C1917] cursor-pointer"
+              >
+                بستن (Esc)
+              </button>
             </div>
           </div>
         </div>,
