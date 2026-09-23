@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Sparkles } from 'lucide-react';
+import { MessageSquareText, X, Sparkles } from 'lucide-react';
 import { playLuxuryHoverChime, playLuxuryClickChime } from '../utils/audio';
 
 interface ClickRipple {
@@ -57,7 +57,7 @@ export const FloatingWhatsApp: React.FC = () => {
 
   return (
     <div
-      className={`fixed bottom-6 left-6 z-30 flex items-center gap-3 transition-all duration-700 ease-out transform ${
+      className={`floating-whatsapp-wrapper fixed bottom-6 left-6 z-30 flex items-center gap-3 transition-all duration-700 ease-out transform ${
         isLoaded
           ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
           : 'opacity-0 translate-y-6 scale-90 pointer-events-none'
@@ -78,15 +78,15 @@ export const FloatingWhatsApp: React.FC = () => {
         </div>
       )}
 
-      {/* Luxury WhatsApp Floating Action Button with Radiating Golden Ripple Effect */}
+      {/* Luxury Chat Floating Action Button with Radiating Golden Ripple Effect */}
       <div className="relative flex items-center justify-center">
-        {/* Radiating Subtle Golden Ripple Waves (every 5 seconds) */}
+        {/* Radiating Subtle Golden Ripple Waves */}
         <span
-          className="absolute inset-0 rounded-full border-2 border-[#D4AF37]/75 bg-[#D4AF37]/10 pointer-events-none animate-golden-ripple"
+          className="absolute inset-0 rounded-full border border-[#D4AF37]/65 bg-[#D4AF37]/10 pointer-events-none animate-golden-ripple"
           aria-hidden="true"
         />
         <span
-          className="absolute inset-0 rounded-full border border-[#B8860B]/60 pointer-events-none animate-golden-ripple-delayed"
+          className="absolute inset-0 rounded-full border border-[#B8860B]/45 pointer-events-none animate-golden-ripple-delayed"
           aria-hidden="true"
         />
 
@@ -96,9 +96,9 @@ export const FloatingWhatsApp: React.FC = () => {
           rel="noreferrer"
           onMouseEnter={handleMouseEnter}
           onClick={handleClick}
-          className="w-13 h-13 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 relative group cursor-pointer z-10"
-          title="مشاوره VIP در واتس‌اپ"
-          aria-label="مشاوره VIP در واتس‌اپ"
+          className="w-10.5 h-10.5 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-[#1C1917] via-[#292524] to-[#44403C] border border-[#D4AF37]/60 text-[#D4AF37] hover:text-white hover:border-[#B8860B] flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 relative group cursor-pointer z-10"
+          title="گفتگو و مشاوره آنلاین طلا"
+          aria-label="گفتگو و مشاوره آنلاین طلا"
         >
           {/* Localized Golden Click Ripples (Centered at Interaction Point) */}
           <span className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-0">
@@ -120,10 +120,10 @@ export const FloatingWhatsApp: React.FC = () => {
           {/* Subtle Luxury Golden Ripple Ring on Hover */}
           <span className="absolute inset-0 rounded-full border border-[#D4AF37]/50 group-hover:scale-125 group-hover:opacity-0 transition-all duration-500 pointer-events-none z-0"></span>
 
-          <MessageCircle className="w-7 h-7 relative z-10" />
+          <MessageSquareText className="w-5 h-5 relative z-10 drop-shadow-xs" />
 
           {/* Status Dot with Gold & White Ring */}
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#D4AF37] border-2 border-white shadow-xs z-20"></span>
+          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#10B981] border-2 border-[#1C1917] shadow-xs z-20"></span>
         </a>
       </div>
     </div>
