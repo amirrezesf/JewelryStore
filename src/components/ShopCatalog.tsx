@@ -54,6 +54,12 @@ export const ShopCatalog: React.FC<ShopCatalogProps> = ({
     }
   }, [initialSearchQuery]);
 
+  useEffect(() => {
+    if (initialCategory) {
+      setFilters((prev) => ({ ...prev, category: initialCategory }));
+    }
+  }, [initialCategory]);
+
   // Calculate prices for all items to filter by price accurately
   const productsWithPrice = useMemo(() => {
     return products.map((p) => {

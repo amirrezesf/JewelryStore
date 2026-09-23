@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   INITIAL_PRODUCTS, 
   INITIAL_GOLD_RATES, 
   INITIAL_ORDERS, 
   INITIAL_REVIEWS 
 } from './data/mockData';
-import { CartItem, GoldRates, Order, Product, Review } from './types';
+import { CartItem, GoldRates, Order, Product, ProductCategory, Review } from './types';
 
 // Components
 import { GoldRateTicker } from './components/GoldRateTicker';
@@ -36,6 +37,10 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AuthModal } from './components/AuthModal';
 
 export default function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // Application Data States (persisted in localStorage with validation & fallbacks)
   const [products, setProducts] = useState<Product[]>(() => {
     try {
@@ -117,19 +122,6 @@ export default function App() {
     return new Set<string>();
   });
 
-  // Navigation & View State
-  const [currentView, setCurrentView] = useState<'home' | 'shop'>('home');
-  const [selectedCatalogCategory, setSelectedCatalogCategory] = useState<Product['category'] | 'all'>('all');
-
-  // Modals & Drawers
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [isOrderTrackingOpen, setIsOrderTrackingOpen] = useState(false);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [activeStaticPage, setActiveStaticPage] = useState<'pricing' | 'about' | 'contact' | 'faq' | 'terms' | null>(null);
-
   // User Authentication & Session (Admin panel is accessible after login)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     try {
@@ -145,6 +137,15 @@ export default function App() {
       return '';
     }
   });
+
+  // Toast Notification
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage((prev) => (prev === msg ? null : prev));
+    }, 2500);
+  };
 
   const handleLoginSuccess = (phone: string) => {
     setIsLoggedIn(true);
@@ -173,23 +174,6 @@ export default function App() {
   // Selected entities for modals
   const [selectedProductForDetail, setSelectedProductForDetail] = useState<Product | null>(null);
   const [selectedOrderForInvoice, setSelectedOrderForInvoice] = useState<Order | null>(null);
-  const [globalSearchQuery, setGlobalSearchQuery] = useState<string>('');
-
-  const handleSearch = (query: string) => {
-    setGlobalSearchQuery(query);
-    setCurrentView('shop');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Toast Notification
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  const triggerToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage((prev) => (prev === msg ? null : prev));
-    }, 2500);
-  };
 
   // Sync to localStorage
   useEffect(() => {
@@ -215,6 +199,148 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('zarrin_reviews', JSON.stringify(reviews));
   }, [reviews]);
+
+  // Derived current view from react-router pathname
+  const currentView: 'home' | 'shop' = location.pathname.startsWith('/shop') ? 'shop' : 'home';
+
+  // Category & search extracted from URL query params
+  const selectedCatalogCategory = (searchParams.get('category') as Product['category']) || 'all';
+  const globalSearchQuery = searchParams.get('q') || '';
+
+  // Modal states derived from URL search parameters so mobile back button closes modals!
+  const isCartOpen = searchParams.get('modal') === 'cart';
+  const isWishlistOpen = searchParams.get('modal') === 'wishlist';
+  const isCheckoutOpen = searchParams.get('modal') === 'checkout';
+  const isAdminOpen = searchParams.get('modal') === 'admin';
+  const isOrderTrackingOpen = searchParams.get('modal') === 'tracking';
+  const isAuthOpen = searchParams.get('modal') === 'auth';
+  const activeStaticPage = (searchParams.get('page') as 'pricing' | 'about' | 'contact' | 'faq' | 'terms') || null;
+
+  // Product detail modal synchronized with ?product=ID URL param
+  const productIdInUrl = searchParams.get('product');
+  useEffect(() => {
+    if (productIdInUrl) {
+      const p = products.find((item) => item.id === productIdInUrl);
+      if (p) {
+        setSelectedProductForDetail(p);
+      }
+    } else {
+      setSelectedProductForDetail(null);
+    }
+  }, [productIdInUrl, products]);
+
+  // Invoice modal synchronized with ?invoice=orderNumber
+  const invoiceOrderNumber = searchParams.get('invoice');
+  useEffect(() => {
+    if (invoiceOrderNumber) {
+      const order = orders.find((o) => o.orderNumber === invoiceOrderNumber || o.id === invoiceOrderNumber);
+      if (order) {
+        setSelectedOrderForInvoice(order);
+      }
+    } else {
+      setSelectedOrderForInvoice(null);
+    }
+  }, [invoiceOrderNumber, orders]);
+
+  // Navigation helpers that push new history entries so back button works seamlessly
+  const openModal = useCallback((modalName: string) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('modal', modalName);
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const closeModal = useCallback((modalName?: string) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (modalName) {
+        if (next.get('modal') === modalName) {
+          next.delete('modal');
+        }
+      } else {
+        next.delete('modal');
+      }
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const openStaticPage = useCallback((pageType: 'pricing' | 'about' | 'contact' | 'faq' | 'terms') => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('page', pageType);
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const closeStaticPage = useCallback(() => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete('page');
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const openProductDetail = useCallback((product: Product) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('product', product.id);
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const closeProductDetail = useCallback(() => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete('product');
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const openInvoiceModal = useCallback((order: Order) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('invoice', order.orderNumber);
+      return next;
+    });
+  }, [setSearchParams]);
+
+  const closeInvoiceModal = useCallback(() => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete('invoice');
+      return next;
+    });
+  }, [setSearchParams]);
+
+  // Shop & Category Navigation
+  const handleNavigateToHome = useCallback(() => {
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigate]);
+
+  const handleNavigateToShop = useCallback(() => {
+    navigate('/shop');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigate]);
+
+  const handleSelectCategory = useCallback((categoryId: Product['category'] | 'all') => {
+    if (categoryId === 'all') {
+      navigate('/shop');
+    } else {
+      navigate(`/shop?category=${categoryId}`);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigate]);
+
+  const handleSearch = useCallback((query: string) => {
+    if (query.trim()) {
+      navigate(`/shop?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      navigate('/shop');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigate]);
 
   // Review submission
   const handleAddReview = (newReview: Omit<Review, 'id' | 'date'>) => {
@@ -275,35 +401,17 @@ export default function App() {
   // Quick checkout direct from product detail
   const handleQuickCheckout = (product: Product, quantity = 1) => {
     setCart([{ product, quantity }]);
-    setSelectedProductForDetail(null);
-    setIsCheckoutOpen(true);
+    closeProductDetail();
+    openModal('checkout');
   };
 
   // Order submission
   const handleOrderSuccess = (order: Order) => {
     setOrders((prev) => [order, ...prev]);
     setCart([]);
-    setIsCheckoutOpen(false);
-    setSelectedOrderForInvoice(order);
+    closeModal('checkout');
+    openInvoiceModal(order);
     triggerToast(`سفارش شماره ${order.orderNumber} با موفقیت ثبت و فاکتور رسمی صادر شد.`);
-  };
-
-  // Category navigation from anywhere
-  const handleSelectCategory = (categoryId: Product['category']) => {
-    setSelectedCatalogCategory(categoryId);
-    setCurrentView('shop');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateToShop = () => {
-    setSelectedCatalogCategory('all');
-    setCurrentView('shop');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateToHome = () => {
-    setCurrentView('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Admin resets
@@ -321,7 +429,9 @@ export default function App() {
   };
 
   // Compute products in wishlist
-  const wishlistProducts = products.filter((p) => wishlistIds.has(p.id));
+  const wishlistProducts = useMemo(() => {
+    return products.filter((p) => wishlistIds.has(p.id));
+  }, [products, wishlistIds]);
 
   return (
     <div className="min-h-screen bg-[#FAFAF7] text-[#1C1917] font-['Vazirmatn',sans-serif] selection:bg-[#E8D49E] selection:text-[#1C1917] flex flex-col relative antialiased">
@@ -329,9 +439,9 @@ export default function App() {
       <GoldRateTicker
         goldRates={goldRates}
         rates={goldRates}
-        onOpenRatesModal={() => setActiveStaticPage('pricing')}
-        onOpenPricingModal={() => setActiveStaticPage('pricing')}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenRatesModal={() => openStaticPage('pricing')}
+        onOpenPricingModal={() => openStaticPage('pricing')}
+        onOpenAdmin={() => openModal('admin')}
         isLoggedIn={isLoggedIn}
       />
 
@@ -350,47 +460,45 @@ export default function App() {
           else handleNavigateToHome();
         }}
         onSelectCategory={handleSelectCategory}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenCart={() => openModal('cart')}
+        onOpenWishlist={() => openModal('wishlist')}
+        onOpenAdmin={() => openModal('admin')}
+        onOpenAuth={() => openModal('auth')}
         isLoggedIn={isLoggedIn}
         userPhone={userPhone}
-        onOpenOrderTracking={() => setIsOrderTrackingOpen(true)}
-        onOpenTracking={() => setIsOrderTrackingOpen(true)}
-        onOpenPricingInfo={() => setActiveStaticPage('pricing')}
-        onOpenAbout={() => setActiveStaticPage('about')}
-        onOpenContact={() => setActiveStaticPage('contact')}
-        onOpenInfoModal={(type) => setActiveStaticPage(type)}
+        onOpenOrderTracking={() => openModal('tracking')}
+        onOpenTracking={() => openModal('tracking')}
+        onOpenPricingInfo={() => openStaticPage('pricing')}
+        onOpenAbout={() => openStaticPage('about')}
+        onOpenContact={() => openStaticPage('contact')}
+        onOpenInfoModal={(type) => openStaticPage(type)}
         onOpenSearch={handleNavigateToShop}
         onSearch={handleSearch}
       />
 
-      {/* 3. Main Views */}
+      {/* 3. Main Views (Home vs Shop Catalog) */}
       <main className="flex-1">
         {currentView === 'home' ? (
           <>
             {/* 1. Hero Section with Live Calculator & Trade Quote */}
             <Hero
               goldRates={goldRates}
-              rates={goldRates}
               onExploreShop={handleNavigateToShop}
               onExploreProducts={handleNavigateToShop}
               onExploreCollection={handleNavigateToShop}
-              onConsultation={() => setActiveStaticPage('contact')}
-              onOpenPricingModal={() => setActiveStaticPage('pricing')}
+              onConsultation={() => openStaticPage('contact')}
+              onOpenPricingModal={() => openStaticPage('pricing')}
             />
 
             {/* 2. Interactive Gold Price Chart */}
             <GoldPriceChart
               goldRates={goldRates}
-              onTradeNow={handleNavigateToShop}
+              onTradeClick={handleNavigateToShop}
             />
 
             {/* 3. Visual Categories Grid (Jourabian categorization & 0% fee badges) */}
             <CategoriesSection
               onSelectCategory={handleSelectCategory}
-              onExploreAll={handleNavigateToShop}
             />
 
             {/* 4. Products Showcase with Interactive Category Tabs */}
@@ -399,7 +507,7 @@ export default function App() {
               goldRates={goldRates}
               wishlistIds={wishlistIds}
               onToggleWishlist={handleToggleWishlist}
-              onQuickView={(p) => setSelectedProductForDetail(p)}
+              onQuickView={(p) => openProductDetail(p)}
               onAddToCart={handleAddToCart}
               onExploreAll={handleNavigateToShop}
               onViewAll={handleNavigateToShop}
@@ -408,12 +516,12 @@ export default function App() {
 
             {/* 5. Why Choose Us (0% fee, fast settlement, secure vault) */}
             <WhyChooseUsSection
-              onStartTrading={() => setIsAuthOpen(true)}
+              onStartTrading={() => openModal('auth')}
             />
 
             {/* 6. Step-by-Step Buying Roadmap */}
             <BuyingStepsSection
-              onStartStep1={() => setIsAuthOpen(true)}
+              onStartStep1={() => openModal('auth')}
             />
 
             {/* 7. Mobile App & PWA Banner */}
@@ -430,7 +538,7 @@ export default function App() {
               goldRates={goldRates}
               onExploreCollection={handleNavigateToShop}
               onExplore={handleNavigateToShop}
-              onBookAppointment={() => setActiveStaticPage('contact')}
+              onBookAppointment={() => openStaticPage('contact')}
             />
 
             {/* 11. Trust & Heritage Badges */}
@@ -451,7 +559,7 @@ export default function App() {
             initialCategory={selectedCatalogCategory}
             initialSearchQuery={globalSearchQuery}
             onToggleWishlist={handleToggleWishlist}
-            onQuickView={(p) => setSelectedProductForDetail(p)}
+            onQuickView={(p) => openProductDetail(p)}
             onAddToCart={handleAddToCart}
           />
         )}
@@ -465,23 +573,23 @@ export default function App() {
         }}
         onSelectCategory={handleSelectCategory}
         onNavigateCategory={handleSelectCategory}
-        onOpenInfoModal={(type) => setActiveStaticPage(type)}
-        onOpenPricing={() => setActiveStaticPage('pricing')}
-        onOpenAbout={() => setActiveStaticPage('about')}
-        onOpenContact={() => setActiveStaticPage('contact')}
-        onOpenFaq={() => setActiveStaticPage('faq')}
-        onOpenTerms={() => setActiveStaticPage('terms')}
-        onOpenTracking={() => setIsOrderTrackingOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenInfoModal={(type) => openStaticPage(type)}
+        onOpenPricing={() => openStaticPage('pricing')}
+        onOpenAbout={() => openStaticPage('about')}
+        onOpenContact={() => openStaticPage('contact')}
+        onOpenFaq={() => openStaticPage('faq')}
+        onOpenTerms={() => openStaticPage('terms')}
+        onOpenTracking={() => openModal('tracking')}
+        onOpenAdmin={() => openModal('admin')}
       />
 
-      {/* 5. Drawers & Modals */}
+      {/* 5. Drawers & Modals with History/Back-button integration */}
       {/* Product Detail Modal */}
       <ProductDetailModal
         product={selectedProductForDetail}
         goldRates={goldRates}
         isWishlisted={selectedProductForDetail ? wishlistIds.has(selectedProductForDetail.id) : false}
-        onClose={() => setSelectedProductForDetail(null)}
+        onClose={closeProductDetail}
         onToggleWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
         onQuickCheckout={handleQuickCheckout}
@@ -490,17 +598,16 @@ export default function App() {
       {/* Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
+        onClose={() => closeModal('cart')}
         items={cart}
         goldRates={goldRates}
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveFromCart}
         onProceedToCheckout={() => {
-          setIsCartOpen(false);
-          setIsCheckoutOpen(true);
+          openModal('checkout');
         }}
         onExploreProducts={() => {
-          setIsCartOpen(false);
+          closeModal('cart');
           handleNavigateToShop();
         }}
       />
@@ -508,18 +615,18 @@ export default function App() {
       {/* Wishlist Drawer */}
       <WishlistDrawer
         isOpen={isWishlistOpen}
-        onClose={() => setIsWishlistOpen(false)}
+        onClose={() => closeModal('wishlist')}
         wishlistProducts={wishlistProducts}
         goldRates={goldRates}
         onRemoveFromWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
-        onQuickView={(p) => setSelectedProductForDetail(p)}
+        onQuickView={(p) => openProductDetail(p)}
       />
 
       {/* Checkout Modal */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
+        onClose={() => closeModal('checkout')}
         items={cart}
         goldRates={goldRates}
         onOrderSuccess={handleOrderSuccess}
@@ -528,13 +635,13 @@ export default function App() {
       {/* Official Invoice Modal */}
       <InvoiceModal
         order={selectedOrderForInvoice}
-        onClose={() => setSelectedOrderForInvoice(null)}
+        onClose={closeInvoiceModal}
       />
 
       {/* Admin Panel */}
       <AdminPanel
         isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
+        onClose={() => closeModal('admin')}
         goldRates={goldRates}
         onUpdateGoldRates={(newRates) => {
           setGoldRates(newRates);
@@ -561,7 +668,7 @@ export default function App() {
           triggerToast('وضعیت سفارش تغییر یافت.');
         }}
         onViewInvoice={(order) => {
-          setSelectedOrderForInvoice(order);
+          openInvoiceModal(order);
         }}
         reviews={reviews}
         onDeleteReview={(revId) => {
@@ -574,30 +681,29 @@ export default function App() {
       {/* Order Tracking Modal */}
       <OrderTrackingModal
         isOpen={isOrderTrackingOpen}
-        onClose={() => setIsOrderTrackingOpen(false)}
+        onClose={() => closeModal('tracking')}
         orders={orders}
         onViewInvoice={(order) => {
-          setIsOrderTrackingOpen(false);
-          setSelectedOrderForInvoice(order);
+          openInvoiceModal(order);
         }}
       />
 
       {/* Static Information Modals */}
       <StaticPagesModal
         type={activeStaticPage}
-        onClose={() => setActiveStaticPage(null)}
+        onClose={closeStaticPage}
         goldRates={goldRates}
       />
 
-      {/* Auth & Wallet Modal (Admin panel is accessed from here after login) */}
+      {/* Auth & Wallet Modal */}
       <AuthModal
         isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
+        onClose={() => closeModal('auth')}
         goldRate={goldRates.rate18K}
         isLoggedIn={isLoggedIn}
         onLoginSuccess={handleLoginSuccess}
         onLogout={handleLogout}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAdmin={() => openModal('admin')}
       />
 
       {/* Floating VIP WhatsApp Concierge */}
