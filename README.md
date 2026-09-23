@@ -1,9 +1,11 @@
 <div dir="rtl" align="right">
-
-<h1 align="center">💎 JewelryStore</h1>
+<div align="center">
+  <img src="banner.png" alt="Project Banner" width="100%">
+</div>
+<h1 align="center">💎 ZarinJewelry</h1>
 
 <p align="center">
-  فروشگاه اینترنتی جواهرات؛ ساخته‌شده با React، TypeScript و Vite، همراه با قابلیت‌های هوش مصنوعی Google Gemini
+  فروشگاه اینترنتی جواهرات؛ ساخته‌شده با React، TypeScript و Vite
 </p>
 
 <p align="center">
@@ -17,7 +19,6 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" />
   <img alt="Vite" src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white" />
   <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" />
-  <img alt="Gemini" src="https://img.shields.io/badge/Google-Gemini_API-4285F4?logo=google&logoColor=white" />
 </p>
 
 ---
@@ -39,16 +40,13 @@
 
 ## 🌟 معرفی پروژه
 
-**JewelryStore** یک اپلیکیشن وب مدرن برای فروشگاه جواهرات است. رابط کاربری آن با **React 19** و **Tailwind CSS 4** ساخته شده و برای تجربه‌ای روان، سریع و زیبا از انیمیشن‌های کتابخانه **Motion** بهره می‌برد. این پروژه با **Vite** بیلد می‌شود و از **Google Gemini API** برای قابلیت‌های مبتنی بر هوش مصنوعی استفاده می‌کند.
+**JewelryStore** یک اپلیکیشن وب مدرن برای فروشگاه جواهرات است. رابط کاربری آن با **React 19** و **Tailwind CSS 4** ساخته شده و برای تجربه‌ای روان، سریع و زیبا از انیمیشن‌های کتابخانه **Motion** بهره می‌برد. این پروژه با **Vite** بیلد می‌شود.
 
 🔗 **دمو زنده:** [amirrezesf.github.io/JewelryStore](https://amirrezesf.github.io/JewelryStore)
-
-این مخزن از قالب [google-gemini/aistudio-repository-template](https://github.com/google-gemini/aistudio-repository-template) ایجاد شده است.
 
 ## ✨ ویژگی‌ها
 
 - 🛍️ رابط کاربری فروشگاهی برای نمایش و مرور محصولات جواهرات
-- 🤖 یکپارچگی با هوش مصنوعی Gemini از طریق `@google/genai`
 - 🎨 طراحی مدرن و ریسپانسیو با Tailwind CSS
 - ✨ انیمیشن‌ها و انتقال‌های روان با Motion
 - 🧩 آیکون‌های سبک و یکدست با Lucide React
@@ -65,7 +63,6 @@
 | استایل | Tailwind CSS 4 (`@tailwindcss/vite`)، Autoprefixer |
 | انیمیشن | Motion |
 | آیکون | Lucide React |
-| هوش مصنوعی | Google Gemini (`@google/genai`) |
 | سرور | Express، tsx |
 | پیکربندی | dotenv |
 
@@ -87,7 +84,6 @@ JewelryStore/
 
 - [Node.js](https://nodejs.org/) نسخه ۱۸ یا بالاتر
 - مدیر بسته `npm` (همراه با Node.js نصب می‌شود)
-- یک کلید API از [Google AI Studio](https://aistudio.google.com/apikey)
 
 ## 🚀 نصب و راه‌اندازی
 
@@ -124,17 +120,15 @@ npm run dev
 
 | متغیر | توضیح | ضروری |
 | --- | --- | :---: |
-| `GEMINI_API_KEY` | کلید API برای فراخوانی سرویس Gemini | ✅ |
 | `APP_URL` | آدرسی که اپلیکیشن روی آن میزبانی می‌شود (برای لینک‌های داخلی، callbackهای OAuth و endpointهای API) | ✅ |
 
 مثال فایل `.env`:
 
 ```env
-GEMINI_API_KEY="your_gemini_api_key"
 APP_URL="http://localhost:3000"
 ```
 
-> ⚠️ **هشدار امنیتی:** فایل `.env` را هرگز در مخزن عمومی commit نکنید و کلید API خود را با دیگران به اشتراک نگذارید.
+> ⚠️ **هشدار امنیتی:** فایل `.env` را هرگز در مخزن عمومی commit نکنید و اطلاعات حساس خود را با دیگران به اشتراک نگذارید.
 
 ## 📜 اسکریپت‌های موجود
 
