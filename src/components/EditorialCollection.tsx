@@ -27,7 +27,7 @@ export const EditorialCollection: React.FC<EditorialCollectionProps> = ({
           <div className="lg:col-span-7 grid grid-cols-12 gap-4 sm:gap-6 items-center">
             <div className="col-span-7 relative overflow-hidden rounded-2xl border border-[#E8E4DA] shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=85&w=1200&auto=format&fit=crop"
+                src="https://images.pexels.com/photos/135657/pexels-photo-135657.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt="کالکشن سلطنتی ماهور"
                 className="w-full aspect-[3/4] object-cover object-center hover:scale-105 transition-transform duration-700"
                 loading="lazy"
@@ -41,7 +41,7 @@ export const EditorialCollection: React.FC<EditorialCollectionProps> = ({
             <div className="col-span-5 space-y-4 sm:space-y-6">
               <div className="relative overflow-hidden rounded-2xl border border-[#E8E4DA] shadow-lg">
                 <img
-                  src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=85&w=800&auto=format&fit=crop"
+                  src="https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="انگشتر الماس ماهور"
                   className="w-full aspect-square object-cover object-center hover:scale-105 transition-transform duration-700"
                   loading="lazy"
