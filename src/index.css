@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #FAFAF7;
+    color: #1A1918;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F2EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D3C8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8860B;
+}
+
+/* Luxury typography accents */
+.font-serif-luxury {
+  font-family: 'Cormorant Garamond', 'Vazirmatn', serif;
+}
+
+/* Subtle gold border glow */
+.gold-border-subtle {
+  border: 1px solid rgba(197, 155, 39, 0.25);
+}
+.gold-border-hover:hover {
+  border-color: rgba(184, 134, 11, 0.5);
+}
+
+/* Subtle luxury entrance animation */
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slideUpFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Pulsating Subtle Golden Ripple Animation (Radiates every 5 seconds) */
+@keyframes goldenRipplePrimary {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.9;
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7), inset 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  22% {
+    transform: scale(1.48);
+    opacity: 0.45;
+    box-shadow: 0 0 16px 3px rgba(212, 175, 55, 0.4), inset 0 0 12px rgba(212, 175, 55, 0.2);
+  }
+  34% {
+    transform: scale(1.85);
+    opacity: 0;
+    box-shadow: 0 0 22px 6px rgba(212, 175, 55, 0);
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes goldenRippleSecondary {
+  0%, 7% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.8;
+    transform: scale(0.98);
+    box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.6);
+  }
+  28% {
+    transform: scale(1.55);
+    opacity: 0.35;
+    box-shadow: 0 0 14px 2px rgba(184, 134, 11, 0.35);
+  }
+  40% {
+    transform: scale(1.95);
+    opacity: 0;
+    box-shadow: 0 0 24px 5px rgba(184, 134, 11, 0);
+  }
+  100% {
+    transform: scale(1.95);
+    opacity: 0;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-golden-ripple {
+  animation: goldenRipplePrimary 5s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+
+.animate-golden-ripple-delayed {
+  animation: goldenRippleSecondary 5s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+
+/* Localized Golden Click Ripple Effect (Point of interaction) */
+@keyframes goldenClickRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.9;
+    background: radial-gradient(circle, rgba(255, 248, 200, 0.95) 0%, rgba(245, 158, 11, 0.7) 40%, rgba(184, 134, 11, 0.35) 70%, rgba(184, 134, 11, 0) 85%);
+    box-shadow: 0 0 14px 4px rgba(255, 215, 0, 0.8);
+  }
+  60% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    box-shadow: 0 0 24px 8px rgba(212, 175, 55, 0);
+  }
+}
+
+.animate-golden-click-ripple {
+  animation: goldenClickRipple 0.65s cubic-bezier(0.12, 0.8, 0.32, 1) forwards;
+}
+
+/* Mobile Sidebar Slide-in Animation from Right (RTL) */
+@keyframes slideRightToLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideRightToLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

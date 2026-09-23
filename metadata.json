@@ -1,0 +1,6 @@
+{
+  "name": "گالری طلا و جواهرات زرین",
+  "description": "فروشگاه آنلاین طلا و جواهرات لوکس، اصیل و دست‌ساز با سیستم محاسبه لحظه‌ای قیمت طلا و فاکتور رسمی",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
