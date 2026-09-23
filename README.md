@@ -7,6 +7,12 @@
 </p>
 
 <p align="center">
+  <a href="https://amirrezesf.github.io/JewelryStore">
+    <img alt="مشاهده دمو" src="https://img.shields.io/badge/🚀_مشاهده_دمو_زنده-Live_Demo-D4AF37?style=for-the-badge" />
+  </a>
+</p>
+
+<p align="center">
   <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" />
   <img alt="Vite" src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white" />
@@ -34,6 +40,8 @@
 ## 🌟 معرفی پروژه
 
 **JewelryStore** یک اپلیکیشن وب مدرن برای فروشگاه جواهرات است. رابط کاربری آن با **React 19** و **Tailwind CSS 4** ساخته شده و برای تجربه‌ای روان، سریع و زیبا از انیمیشن‌های کتابخانه **Motion** بهره می‌برد. این پروژه با **Vite** بیلد می‌شود و از **Google Gemini API** برای قابلیت‌های مبتنی بر هوش مصنوعی استفاده می‌کند.
+
+🔗 **دمو زنده:** [amirrezesf.github.io/JewelryStore](https://amirrezesf.github.io/JewelryStore)
 
 این مخزن از قالب [google-gemini/aistudio-repository-template](https://github.com/google-gemini/aistudio-repository-template) ایجاد شده است.
 
