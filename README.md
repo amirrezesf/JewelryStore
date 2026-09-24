@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://amirrezesf.github.io/JewelryStore">
+  <a href="https://amirrezesf.github.io/ZarinJewelry">
     <img alt="مشاهده دمو" src="https://img.shields.io/badge/🚀_مشاهده_دمو_زنده-Live_Demo-D4AF37?style=for-the-badge" />
   </a>
 </p>
@@ -40,9 +40,9 @@
 
 ## 🌟 معرفی پروژه
 
-**JewelryStore** یک اپلیکیشن وب مدرن برای فروشگاه جواهرات است. رابط کاربری آن با **React 19** و **Tailwind CSS 4** ساخته شده و برای تجربه‌ای روان، سریع و زیبا از انیمیشن‌های کتابخانه **Motion** بهره می‌برد. این پروژه با **Vite** بیلد می‌شود.
+**ZarinJewelry** یک اپلیکیشن وب مدرن برای فروشگاه جواهرات است. رابط کاربری آن با **React 19** و **Tailwind CSS 4** ساخته شده و برای تجربه‌ای روان، سریع و زیبا از انیمیشن‌های کتابخانه **Motion** بهره می‌برد. این پروژه با **Vite** بیلد می‌شود.
 
-🔗 **دمو زنده:** [amirrezesf.github.io/JewelryStore](https://amirrezesf.github.io/JewelryStore)
+🔗 **دمو زنده:** [amirrezesf.github.io/ZarinJewelry](https://amirrezesf.github.io/ZarinJewelry)
 
 ## ✨ ویژگی‌ها
 
@@ -69,7 +69,7 @@
 ## 📁 ساختار پروژه
 
 ```text
-JewelryStore/
+ZarinJewelry/
 ├── src/               # سورس‌کد اصلی اپلیکیشن
 ├── index.html         # نقطه ورود HTML
 ├── vite.config.ts     # تنظیمات Vite
@@ -90,8 +90,8 @@ JewelryStore/
 **۱. کلون کردن مخزن**
 
 ```bash
-git clone https://github.com/amirrezesf/JewelryStore.git
-cd JewelryStore
+git clone https://github.com/amirrezesf/ZarinJewelry.git
+cd ZarinJewelry
 ```
 
 **۲. نصب وابستگی‌ها**
@@ -150,7 +150,7 @@ APP_URL="http://localhost:3000"
 4. شاخه را push کنید: `git push origin feature/amazing-feature`
 5. یک **Pull Request** باز کنید.
 
-همچنین می‌توانید باگ‌ها و پیشنهادهای خود را از بخش [Issues](https://github.com/amirrezesf/JewelryStore/issues) گزارش دهید.
+همچنین می‌توانید باگ‌ها و پیشنهادهای خود را از بخش [Issues](https://github.com/amirrezesf/ZarinJewelry/issues) گزارش دهید.
 
 ## 📄 مجوز
 
