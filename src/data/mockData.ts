@@ -14,7 +14,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'no_fee',
     name: 'طلای بدون اجرت و آبشده',
     slug: 'no-fee',
-    image: 'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg',
     description: 'طلای آبشده انگ‌دار با شناسنامه آزمایشگاه عیارسنجی ری‌گیری، بدون اجرت ساخت، ایده‌آل‌ترین روش سرمایه‌گذاری امن',
     badge: '۰٪ اجرت ساخت',
     itemCount: 14,
@@ -23,7 +23,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'coins',
     name: 'شمش و سکه بانکی',
     slug: 'coins',
-    image: 'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg',
     description: 'شمش‌های سرمایه‌گذاری ۲۴ عیار خالص ۹۹۹.۹ و سکه‌های رسمی بهار آزادی پلمپ با هولوگرام',
     badge: '۲۴ عیار استاندارد',
     itemCount: 18,
@@ -32,7 +32,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'rings',
     name: 'انگشتر و رینگ',
     slug: 'rings',
-    image: 'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1605100804763-247f67b3557e.jpg',
     description: 'انگشترهای سولیتر الماس، نگین‌دار فاخر و رینگ‌های مدرن لاو',
     badge: 'سولیتر و برلیان',
     itemCount: 24,
@@ -41,7 +41,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'necklaces',
     name: 'گردنبند و آویز',
     slug: 'necklaces',
-    image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200&auto=format&fit=crop',
+    image: '/ZarinJewelry/assets/images/1599643478518-a784e5dc4c8f.jpg',
     description: 'گردنبندهای تنیس تمام برلیان، چوکر و آویزهای دست‌ساز اسلیمی زرین',
     badge: 'تنیس و اسلیمی',
     itemCount: 16,
@@ -50,7 +50,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'bracelets',
     name: 'دستبند و النگو',
     slug: 'bracelets',
-    image: 'https://images.pexels.com/photos/726291/pexels-photo-726291.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1611591437281-460bfbe1220a.jpg',
     description: 'دستبندهای النگویی صلب، تنیس و زنجیرهای لوکس فیگارو ایتالیایی',
     badge: 'النگویی و تی‌لوکس',
     itemCount: 19,
@@ -59,7 +59,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'earrings',
     name: 'گوشواره و ایرکاف',
     slug: 'earrings',
-    image: 'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1630019852942-f89202989a59.jpg',
     description: 'گوشواره‌های میخی الماس، اشکی زمرد کلمبیا و آویزهای مجلسی',
     badge: 'میخی و اشکی',
     itemCount: 14,
@@ -68,7 +68,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'sets',
     name: 'سرویس و نیم‌ست',
     slug: 'sets',
-    image: 'https://images.pexels.com/photos/96444/pexels-photo-96444.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: '/ZarinJewelry/assets/images/1515562141207-7a88fb7ce338.jpg',
     description: 'سرویس‌های شاهکار ملکه عروس و نیم‌ست‌های مدرن تشریفاتی',
     badge: 'کالکشن سلطنتی',
     itemCount: 8,
@@ -77,7 +77,7 @@ export const CATEGORIES: CategoryInfo[] = [
     id: 'gifts',
     name: 'طلای سبک و کادویی',
     slug: 'gifts',
-    image: 'https://images.unsplash.com/photo-1598560917505-59a3ad559071?q=80&w=1200&auto=format&fit=crop',
+    image: '/ZarinJewelry/assets/images/1598560917505-59a3ad559071.jpg',
     description: 'شمش‌های کادویی ۱ گرمی و پلاک‌های ظریف با بسته‌بندی نفیس هدیه',
     badge: 'اقتصادی و کادویی',
     itemCount: 21,
@@ -96,8 +96,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     isNoCraftFee: true,
     description: 'قطعه طلای آبشده عیارسنجی شده با انگ رسمی آزمایشگاه معتبر، دارای کد رهگیری ری‌گیری کشوری، بدون کوچکترین اجرت ساخت یا مالیات ارزش افزوده بر اصل طلا.',
     images: [
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg',
+      '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg'
     ],
     inStock: true,
     stockCount: 15,
@@ -122,8 +122,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     isNoCraftFee: true,
     description: 'شمش طلای آبشده قالبی با شماره شناسایی یکتا و فاکتور چاپی رسمی اتحادیه. بدون ریالی کارمزد ساخت، ایده‌آل‌ترین گزینه برای پس‌انداز ریالی.',
     images: [
-      'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg',
+      '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg'
     ],
     inStock: true,
     stockCount: 8,
@@ -147,8 +147,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 5.0,
     description: 'شمش ۱ گرمی طلای ناب سوئیس با بسته‌بندی امنیتی هولوگرام‌دار زرین، گزینه‌ای بی‌نقص و ماندگار برای هدیه تولد، پیوند و اعیاد.',
     images: [
-      'https://images.pexels.com/photos/3235371/pexels-photo-3235371.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1598560917505-59a3ad559071.jpg',
+      '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg'
     ],
     inStock: true,
     stockCount: 25,
@@ -172,9 +172,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 12,
     description: 'انگشتر تک‌نگین با طراحی فاخر و تراش برلیان ممتاز. طلای سفید ۱۸ عیار مات و براق با نگین برلیان VVS1 اصل شناسنامه‌دار.',
     images: [
-      'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/3235371/pexels-photo-3235371.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1605100804763-247f67b3557e.jpg',
+      '/ZarinJewelry/assets/images/1603561591411-07134e71a2a9.jpg',
+      '/ZarinJewelry/assets/images/1598560917505-59a3ad559071.jpg'
     ],
     inStock: true,
     stockCount: 4,
@@ -201,8 +201,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 16,
     description: 'گردنبند تنیس تمام برلیان با چیدمان یکدست و پیوستگی مخملی روی گردن. انتخابی بی‌همتا برای مجالس باشکوه و استایل جاودان.',
     images: [
-      'https://images.pexels.com/photos/135657/pexels-photo-135657.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/96444/pexels-photo-96444.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1599643478518-a784e5dc4c8f.jpg',
+      '/ZarinJewelry/assets/images/1515562141207-7a88fb7ce338.jpg'
     ],
     inStock: true,
     stockCount: 2,
@@ -219,34 +219,34 @@ export const INITIAL_PRODUCTS: Product[] = [
       size: 'طول ۴۲ سانتی‌متر'
     }
   },
-  // {
-  //   id: 'prod-3',
-  //   code: 'ZR-3042',
-  //   name: 'دستبند النگویی تی‌لوکس «فلورانس»',
-  //   category: 'bracelets',
-  //   karat: 18,
-  //   weightInGrams: 8.95,
-  //   craftFeePercent: 11,
-  //   description: 'دستبند النگویی باز با طراحی هندسی مدرن، خطوط شارپ و صیقل آینه‌ای. مناسب برای استفاده روزمره پرستیژ و هماهنگی با ساعت.',
-  //   images: [
-  //     'https://image.torob.com/base/images/fL/J7/fLJ7NDLtIXd8ex64.jpg',
-  //     'https://image.torob.com/base/images/fL/J7/fLJ7NDLtIXd8ex64.jpg'
-  //   ],
-  //   inStock: true,
-  //   stockCount: 5,
-  //   isFeatured: true,
-  //   isNew: false,
-  //   collectionName: 'کالکشن مینیمال مدرن',
-  //   specs: {
-  //     metalColor: 'طلای رزگلد و زرد ۱۸ عیار',
-  //     stones: 'نگین‌های باگت سوئیسی مخراجی شده',
-  //     stoneWeight: '۰.۱۸ قیراط',
-  //     lockType: 'لولا و ضامن مخفی مغناطیسی ایمن',
-  //     purityMark: 'AU 750 ایتالیا',
-  //     warranty: 'ضمانت مادام‌العمر قفل و اتصالات',
-  //     size: 'سایز ۲ و ۳ زنانه'
-  //   }
-  // },
+  {
+    id: 'prod-3',
+    code: 'ZR-3042',
+    name: 'دستبند النگویی تی‌لوکس «فلورانس»',
+    category: 'bracelets',
+    karat: 18,
+    weightInGrams: 8.95,
+    craftFeePercent: 11,
+    description: 'دستبند النگویی باز با طراحی هندسی مدرن، خطوط شارپ و صیقل آینه‌ای. مناسب برای استفاده روزمره پرستیژ و هماهنگی با ساعت.',
+    images: [
+      '/ZarinJewelry/assets/images/1611591437281-460bfbe1220a.jpg',
+      '/ZarinJewelry/assets/images/1602751584552-8ba73aad10e1.jpg'
+    ],
+    inStock: true,
+    stockCount: 5,
+    isFeatured: true,
+    isNew: false,
+    collectionName: 'کالکشن مینیمال مدرن',
+    specs: {
+      metalColor: 'طلای رزگلد و زرد ۱۸ عیار',
+      stones: 'نگین‌های باگت سوئیسی مخراجی شده',
+      stoneWeight: '۰.۱۸ قیراط',
+      lockType: 'لولا و ضامن مخفی مغناطیسی ایمن',
+      purityMark: 'AU 750 ایتالیا',
+      warranty: 'ضمانت مادام‌العمر قفل و اتصالات',
+      size: 'سایز ۲ و ۳ زنانه'
+    }
+  },
   {
     id: 'prod-4',
     code: 'ZR-4015',
@@ -257,8 +257,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 15,
     description: 'گوشواره‌های اشکی چشم‌نواز با زمرد کلمبیا طبیعی با رنگ سبز مخملی عمیق، در قاب خوش‌تراش طلای زرد و برلیان‌های خطی.',
     images: [
-      'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1630019852942-f89202989a59.jpg',
+      '/ZarinJewelry/assets/images/1535632066927-ab7c9ab60908.jpg'
     ],
     inStock: true,
     stockCount: 3,
@@ -285,8 +285,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 4.5,
     description: 'شمش طلای خالص ۹۹۹.۹ سوئیس استاندارد با پکینگ وکیوم ضدجعل هولوگرام‌دار، دارای کد رهگیری آنلاین و تاییدیه اتحادیه طلا و جواهر.',
     images: [
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg',
+      '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg'
     ],
     inStock: true,
     stockCount: 8,
@@ -312,8 +312,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 18,
     description: 'سرویس شاهکار دست‌ساز شامل گردنبند، دستبند، گوشواره و انگشتر ست با نگین‌های تراش مارکیز و باگت با درخششی استثنایی.',
     images: [
-      'https://images.pexels.com/photos/96444/pexels-photo-96444.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/135657/pexels-photo-135657.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1515562141207-7a88fb7ce338.jpg',
+      '/ZarinJewelry/assets/images/1599643478518-a784e5dc4c8f.jpg'
     ],
     inStock: true,
     stockCount: 1,
@@ -340,8 +340,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 9.5,
     description: 'طراحی مینیمال و ارگونومیک، با انحناهای نرم و الهام گرفته از حرکت امواج آب. سبک و بادوام برای استفاده مداوم و روزمره.',
     images: [
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1603561591411-07134e71a2a9.jpg',
+      '/ZarinJewelry/assets/images/1605100804763-247f67b3557e.jpg'
     ],
     inStock: true,
     stockCount: 7,
@@ -367,8 +367,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 10,
     description: 'بافت زنجیری فیگارو اصیل ایتالیایی با حلقه‌های تراش‌خورده الماسی که در هر زاویه‌ای نور را با درخشندگی بالا منعکس می‌کند.',
     images: [
-      'https://images.pexels.com/photos/726291/pexels-photo-726291.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/726291/pexels-photo-726291.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1602751584552-8ba73aad10e1.jpg',
+      '/ZarinJewelry/assets/images/1611591437281-460bfbe1220a.jpg'
     ],
     inStock: true,
     stockCount: 4,
@@ -394,8 +394,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 13,
     description: 'طراحی مینیاتوری گل لوتوس هخامنشی با تک نگین الماس درخشان مرکزی. انتخابی بی‌نظیر برای هدایای یادبود و استایل دخترانه ظریف.',
     images: [
-      'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1535632066927-ab7c9ab60908.jpg',
+      '/ZarinJewelry/assets/images/1630019852942-f89202989a59.jpg'
     ],
     inStock: true,
     stockCount: 9,
@@ -422,8 +422,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 2.8,
     description: 'سکه رسمی ضرب بانک مرکزی جمهوری اسلامی ایران، وکیوم شده در قاب مخصوص هولوگرام‌دار زرین با تضمین اصالت فیزیکی و فاکتور چاپی.',
     images: [
-      'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg',
+      '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg'
     ],
     inStock: true,
     stockCount: 15,
@@ -449,8 +449,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 14,
     description: 'هنر دست زرگران زرین با الهام از طرح ترنج ایرانی، مشبک‌کاری ظریف با تراش‌های لیزری دقیق روی ورق طلای ضخیم و باکیفیت.',
     images: [
-      'https://images.pexels.com/photos/3235371/pexels-photo-3235371.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/135657/pexels-photo-135657.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1598560917505-59a3ad559071.jpg',
+      '/ZarinJewelry/assets/images/1599643478518-a784e5dc4c8f.jpg'
     ],
     inStock: true,
     stockCount: 4,
@@ -477,8 +477,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     craftFeePercent: 11,
     description: 'طرح افسانه‌ای لاو با نمادهای حک شده دقیق پیچ، سمبل وفاداری ابدی. قابلیت حک اسم و تاریخ پیوند به خط نستعلیق داخل حلقه.',
     images: [
-      'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      '/ZarinJewelry/assets/images/1605100804763-247f67b3557e.jpg',
+      '/ZarinJewelry/assets/images/1603561591411-07134e71a2a9.jpg'
     ],
     inStock: true,
     stockCount: 6,
@@ -555,7 +555,7 @@ export const INITIAL_ORDERS: Order[] = [
         unitPrice: 28450000,
         quantity: 1,
         totalPrice: 28450000,
-        image: 'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=1200'
+        image: '/ZarinJewelry/assets/images/1605100804763-247f67b3557e.jpg'
       }
     ],
     totalWeight: 4.85,
@@ -620,7 +620,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: '۵ دقیقه',
     publishDate: '۲۸ شهریور ۱۴۰۳',
     category: 'سرمایه‌گذاری طلا',
-    image: 'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: '/ZarinJewelry/assets/images/1610375461246-83df859d849d.jpg',
     author: 'واحد تحلیل بازار زرین',
     content: [
       'طلای آبشده یکی از محبوب‌ترین ابزارهای حفظ ارزش دارایی در ایران است. برخلاف مصنوعات طلا که بین ۹ تا ۲۵ درصد اجرت ساخت دارند، طلای آبشده هیچ‌گونه اجرتی ندارد.',
@@ -636,7 +636,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: '۴ دقیقه',
     publishDate: '۲۲ شهریور ۱۴۰۳',
     category: 'آموزش طلا',
-    image: 'https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: '/ZarinJewelry/assets/images/1589782182703-2aaa69037b5b.jpg',
     author: 'تیم کارشناسی گوهرشناسی',
     content: [
       'طلای ۲۴ عیار خالص‌ترین فرم طلا با خلوص ۹۹.۹٪ است که در قالب شمش‌های استاندارد ضرب می‌شود. به دلیل نرمی بالا برای استفاده روزمره جواهر مناسب نیست.',
@@ -652,7 +652,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: '۶ دقیقه',
     publishDate: '۱۵ شهریور ۱۴۰۳',
     category: 'قوانین و فاکتور',
-    image: 'https://images.pexels.com/photos/96444/pexels-photo-96444.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: '/ZarinJewelry/assets/images/1515562141207-7a88fb7ce338.jpg',
     author: 'مشاور حقوقی صنف طلا',
     content: [
       'طبق قانون جدید مالیات بر ارزش افزوده، اصل ارزش طلای خام به طور کامل از مالیات ۹٪ معاف است.',
@@ -692,4 +692,3 @@ export const BUYING_STEPS = [
     badge: 'تسویه پایا و تحویل بیمه‌شده'
   }
 ];
-

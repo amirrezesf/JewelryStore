@@ -111,7 +111,7 @@ export const StaticPagesModal: React.FC<StaticPagesModalProps> = ({
             <div className="space-y-5">
               <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden border border-[#E8E4DA] shadow-2xs">
                 <img
-                  src="https://images.pexels.com/photos/96444/pexels-photo-96444.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  src="/ZarinJewelry/assets/images/1515562141207-7a88fb7ce338.jpg"
                   alt="کارگاه زرگری زرین"
                   className="w-full h-full object-cover"
                 />

@@ -43,15 +43,15 @@ export default function App() {
 
   // Application Data States (persisted in localStorage with validation & fallbacks)
   const [products, setProducts] = useState<Product[]>(() => {
-    try {
-      const saved = localStorage.getItem('zarrin_products');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-    } catch (e) {
-      console.error('Error loading products from localStorage:', e);
-    }
+    // try {
+    //   const saved = localStorage.getItem('zarrin_products');
+    //   if (saved) {
+    //     const parsed = JSON.parse(saved);
+    //     if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    //   }
+    // } catch (e) {
+    //   console.error('Error loading products from localStorage:', e);
+    // }
     return INITIAL_PRODUCTS;
   });
 
